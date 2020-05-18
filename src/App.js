@@ -1,12 +1,17 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Users from './components/users/Users';
+import NewPlace from './components/places/NewPlace';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h2>App component</h2>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Users} />
+        <Route exact path="/places/new" component={NewPlace} />
+      </Switch>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
