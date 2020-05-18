@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './User.css';
 import Avatar from '../../../shared/Avatar';
-import Card from '../../../shared/Card';
 
 const User = ({ id, image, name, placeCount }) => {
   return (
