@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Users from './components/users/Users';
+import Users from './components/users/pages';
 import NewPlace from './components/places/NewPlace';
 
 const App = () => {
