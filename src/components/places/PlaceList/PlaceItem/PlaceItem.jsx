@@ -3,8 +3,9 @@ import './PlaceItem.css';
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
 import Modal from '../../../shared/Modal';
+import Map from '../../../shared/Map';
 
-const PlaceItem = ({ id, image, title, description, address }) => {
+const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -26,7 +27,7 @@ const PlaceItem = ({ id, image, title, description, address }) => {
         footer={<Button onClick={handleCloseModal}>CLOSE</Button>}
       >
         <div className="map-container">
-          <h2>THE MAP!</h2>
+          <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
 
