@@ -3,7 +3,17 @@ import './UsersList.css';
 import User from './User';
 import Card from '../../shared/Card';
 
-const UsersList = ({ users }) => {
+const UsersList = () => {
+  const users = [
+    {
+      id: 1,
+      image:
+        'https://www.cicnews.com/wp-content/uploads/2020/05/20200506canadianuni-1.jpg',
+      name: 'Cristian',
+      placeCount: 3,
+    },
+  ];
+
   if (!users.length)
     return (
       <div className="center">
