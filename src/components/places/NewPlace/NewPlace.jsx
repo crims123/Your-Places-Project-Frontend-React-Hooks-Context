@@ -35,7 +35,7 @@ const NewPlace = () => {
       <Input
         id="title"
         type="text"
-        placeHolder="Add Title"
+        placeholder="Add Title"
         element="input"
         label="Title"
         handleOnChange={handleOnChange}
@@ -45,7 +45,7 @@ const NewPlace = () => {
       <Input
         id="description"
         type="text"
-        placeHolder="Add Description"
+        placeholder="Add Description"
         label="Description"
         handleOnChange={handleOnChange}
         name="description"
@@ -54,7 +54,7 @@ const NewPlace = () => {
       <Input
         id="address"
         type="text"
-        placeHolder="Add Address"
+        placeholder="Add Address"
         element="input"
         label="Address"
         handleOnChange={handleOnChange}

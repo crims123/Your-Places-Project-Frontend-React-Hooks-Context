@@ -45,7 +45,7 @@ const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
 
           <div className="place-item__actions">
             <Button onClick={handleOpenModal}>VIEW ON MAP</Button>
-            <Button to={`places/${id}`}>EDIT</Button>
+            <Button to={`/places/${id}`}>EDIT</Button>
             <Button>DELETE</Button>
           </div>
         </Card>

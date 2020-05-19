@@ -10,13 +10,16 @@ const Input = (props) => {
         placeholder={props.placeholder}
         onChange={props.handleOnChange}
         name={props.name}
+        value={props.value}
       />
     ) : (
       <textarea
         id={props.id}
         rows={props.rows || 3}
+        placeholder={props.placeholder}
         onChange={props.handleOnChange}
         name={props.name}
+        value={props.value}
       />
     );
 
