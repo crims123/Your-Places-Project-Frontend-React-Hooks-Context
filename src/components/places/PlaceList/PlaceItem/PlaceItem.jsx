@@ -1,8 +1,9 @@
 import React from 'react';
 import './PlaceItem.css';
 import Card from '../../../shared/Card';
+import Button from '../../../shared/Button';
 
-const PlaceItem = ({ image, title, description, address }) => {
+const PlaceItem = ({ id, image, title, description, address }) => {
   return (
     <li className="place-item">
       <Card className="place-item__content">
@@ -15,9 +16,9 @@ const PlaceItem = ({ image, title, description, address }) => {
           <p>{description}</p>
         </div>
         <div className="place-item__actions">
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <Button>VIEW ON MAP</Button>
+          <Button to={`places/${id}`}>EDIT</Button>
+          <Button>DELETE</Button>
         </div>
       </Card>
     </li>
