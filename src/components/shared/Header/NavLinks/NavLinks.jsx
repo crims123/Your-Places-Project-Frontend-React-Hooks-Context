@@ -20,7 +20,7 @@ const NavLinks = () => {
       </li>
 
       <li>
-        <NavLink to="/auth">AUTHENTICATE</NavLink>
+        <NavLink to="/auth">LOGIN</NavLink>
       </li>
 
       <li>
