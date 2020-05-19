@@ -1,7 +1,8 @@
 import React from 'react';
 import './PlaceList.css';
-import Card from '../../shared/Card';
 import PlaceItem from './PlaceItem';
+import Card from '../../shared/Card';
+import Button from '../../shared/Button';
 
 const places = [
   {
@@ -38,7 +39,7 @@ const PlaceList = () => {
       <div className="place-list center">
         <Card>
           <h2>No places found. Maybe create one?</h2>
-          <button to="/places/new">Create Place</button>
+          <Button to="/places/new">Create Place</Button>
         </Card>
       </div>
     );
