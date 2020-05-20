@@ -63,7 +63,7 @@ const UpdatePlace = () => {
   };
 
   return (
-    <form className="place-form" onSubmit={handleUpdatePlaceSubmit}>
+    <form className="update-place" onSubmit={handleUpdatePlaceSubmit}>
       <Input
         id="title"
         type="text"
