@@ -6,7 +6,7 @@ import Card from '../../../shared/Card';
 import useInput from '../../../../hooks/useInput';
 
 const Login = () => {
-  const [values, setValues, handleOnChange] = useInput({});
+  const [values, handleOnChange] = useInput({});
   useEffect(() => {
     const { email, password } = values;
     if (email && password) {

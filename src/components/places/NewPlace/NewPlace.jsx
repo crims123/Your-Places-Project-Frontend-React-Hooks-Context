@@ -5,11 +5,7 @@ import Button from '../../shared/Button';
 import useInput from '../../../hooks/useInput';
 
 const NewPlace = () => {
-  const [values, setValues, handleOnChange] = useInput({
-    title: '',
-    description: '',
-    address: '',
-  });
+  const [values, handleOnChange] = useInput({});
   useEffect(() => {
     const { title, description, address } = values;
     if (title && description && address) {
@@ -24,10 +20,6 @@ const NewPlace = () => {
   const handleNewPlaceSubmit = (e) => {
     e.preventDefault();
     console.log(values); // send to the backend
-    setValues({
-      title: '',
-      description: '',
-    });
   };
 
   return (

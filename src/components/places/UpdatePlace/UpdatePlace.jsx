@@ -41,11 +41,7 @@ const UpdatePlace = () => {
     (place) => place.id === placeId
   );
 
-  const [values, setValues, handleOnChange] = useInput({
-    title,
-    description,
-    address,
-  });
+  const [values, handleOnChange] = useInput({});
   useEffect(() => {
     const { title, description, address } = values;
     if (title && description && address) {
