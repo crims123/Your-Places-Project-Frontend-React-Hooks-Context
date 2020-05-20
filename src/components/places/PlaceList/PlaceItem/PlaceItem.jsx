@@ -6,29 +6,64 @@ import Modal from '../../../shared/Modal';
 import Map from '../../../shared/Map';
 
 const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleOpenModal = () => {
-    setShowModal(true);
+  const handleOpenMapModal = () => {
+    setShowMapModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const handleCloseMapModal = () => {
+    setShowMapModal(false);
+  };
+
+  const handleOpenDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleConfirmDelete = () => {
+    console.log('DELETING...'); // delete place in backend
   };
 
   return (
     <React.Fragment>
       <Modal
-        show={showModal}
-        onCancel={handleCloseModal}
+        show={showMapModal}
+        onCancel={handleOpenMapModal}
         header={address}
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
-        footer={<Button onClick={handleCloseModal}>CLOSE</Button>}
+        footer={<Button onClick={handleCloseMapModal}>CLOSE</Button>}
       >
         <div className="map-container">
           <Map center={coordinates} zoom={16} />
         </div>
+      </Modal>
+
+      <Modal
+        show={showDeleteModal}
+        onCancel={handleCloseDeleteModal}
+        header="Are you sure?"
+        footerClass="place-item__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button inverse onClick={handleCloseDeleteModal}>
+              CANCEL
+            </Button>
+            <Button danger onClick={handleConfirmDelete}>
+              DELETE
+            </Button>
+          </React.Fragment>
+        }
+      >
+        <p>
+          Do you want to proceed and delete this place? Please note that it
+          can't be undone thereafter.
+        </p>
       </Modal>
 
       <li className="place-item">
@@ -44,9 +79,9 @@ const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
           </div>
 
           <div className="place-item__actions">
-            <Button onClick={handleOpenModal}>VIEW ON MAP</Button>
+            <Button onClick={handleOpenMapModal}>VIEW ON MAP</Button>
             <Button to={`/places/${id}`}>EDIT</Button>
-            <Button>DELETE</Button>
+            <Button onClick={handleOpenDeleteModal}>DELETE</Button>
           </div>
         </Card>
       </li>
