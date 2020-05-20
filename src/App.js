@@ -6,6 +6,7 @@ import PlaceList from './components/places/PlaceList';
 import UpdatePlace from './components/places/UpdatePlace';
 import NewPlace from './components/places/NewPlace';
 import Login from './components/users/Auth/Login';
+import SignUp from './components/users/Auth/SignUp'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path="/places/new" component={NewPlace} />
           <Route exact path="/places/:placeId" component={UpdatePlace} />
           <Route exact path="/auth" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
         </Switch>
       </main>
     </BrowserRouter>
