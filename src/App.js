@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AuthContextStore from './context/auth-context';
+import PrivateRoute from './components/routes/PrivateRoute';
 import Header from './components/shared/Header';
 import UsersList from './components/users/UsersList';
 import PlaceList from './components/places/PlaceList';
@@ -18,8 +19,8 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={UsersList} />
             <Route exact path="/:userId/places" component={PlaceList} />
-            <Route exact path="/places/new" component={NewPlace} />
-            <Route exact path="/places/:placeId" component={UpdatePlace} />
+            <PrivateRoute exact path="/places/new" component={NewPlace} />
+            <PrivateRoute exact path="/places/:placeId" component={UpdatePlace} />
             <Route exact path="/auth" component={Login} />
             <Route exact path="/signup" component={SignUp} />
           </Switch>

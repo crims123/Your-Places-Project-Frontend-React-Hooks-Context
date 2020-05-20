@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Login.css';
+import { AuthContext } from '../../../../context/auth-context';
 import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
 import Card from '../../../shared/Card';
 import useInput from '../../../../hooks/useInput';
 
-const Login = () => {
+const Login = (props) => {
+  const { setIsAuth } = useContext(AuthContext);
+
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
     const { email, password } = values;
@@ -21,6 +24,8 @@ const Login = () => {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     console.log(values); // send to the backend
+    setIsAuth(true);
+    props.history.push('/')
   };
 
   return (

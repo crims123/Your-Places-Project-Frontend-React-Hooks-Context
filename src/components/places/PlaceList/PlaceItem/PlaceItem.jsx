@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './PlaceItem.css';
+import { AuthContext } from '../../../../context/auth-context';
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
 import Modal from '../../../shared/Modal';
 import Map from '../../../shared/Map';
 
 const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
+  const { isAuth } = useContext(AuthContext);
+
   const [showMapModal, setShowMapModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -79,9 +82,18 @@ const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
           </div>
 
           <div className="place-item__actions">
-            <Button onClick={handleOpenMapModal}>VIEW ON MAP</Button>
-            <Button to={`/places/${id}`}>EDIT</Button>
-            <Button onClick={handleOpenDeleteModal}>DELETE</Button>
+            <Button
+              inverse={isAuth ? false : true}
+              onClick={handleOpenMapModal}
+            >
+              VIEW ON MAP
+            </Button>
+            {isAuth && (
+              <React.Fragment>
+                <Button to={`/places/${id}`}>EDIT</Button>
+                <Button onClick={handleOpenDeleteModal}>DELETE</Button>
+              </React.Fragment>
+            )}
           </div>
         </Card>
       </li>
