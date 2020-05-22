@@ -53,7 +53,7 @@ const useFetch = (url, verb, values) => {
     setError(null);
   };
 
-  return [data, isLoading, error, handleError];
+  return [data, isLoading, error, handleError, setData];
 };
 
 export default useFetch;

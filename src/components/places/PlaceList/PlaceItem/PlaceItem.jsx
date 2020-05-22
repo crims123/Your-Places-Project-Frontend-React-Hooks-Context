@@ -4,10 +4,14 @@ import { AuthContext } from '../../../../context/auth-context';
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
 import Modal from '../../../shared/Modal';
+import ErrorModal from '../../../shared/ErrorModal';
+import LoadingSpinner from '../../../shared/LoadingSpinner';
 import Map from '../../../shared/Map';
+import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 
-const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
+const PlaceItem = ({ id, image, title, description, address, coordinates, handleDeletePlace }) => {
   const { isAuth } = useContext(AuthContext);
+  const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
 
   const [showMapModal, setShowMapModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,12 +32,17 @@ const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
     setShowDeleteModal(false);
   };
 
-  const handleConfirmDelete = () => {
-    console.log('DELETING...'); // delete place in backend
+  const handleConfirmDelete = async () => {
+    setShowDeleteModal(false);
+    const response = await fetchData(`/api/places/${id}`, 'delete');
+    if (response) {
+      handleDeletePlace(id);
+    }
   };
 
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={handleError} />
       <Modal
         show={showMapModal}
         onCancel={handleOpenMapModal}
@@ -71,6 +80,7 @@ const PlaceItem = ({ id, image, title, description, address, coordinates }) => {
 
       <li className="place-item">
         <Card className="place-item__content">
+        {isLoading && <LoadingSpinner asOverLay />}
           <div className="place-item__image">
             <img src={image} alt={title} />
           </div>

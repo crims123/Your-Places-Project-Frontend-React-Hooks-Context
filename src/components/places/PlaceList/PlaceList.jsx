@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './PlaceList.css';
+import { AuthContext } from '../../../context/auth-context';
 import PlaceItem from './PlaceItem';
 import Card from '../../shared/Card';
 import Button from '../../shared/Button';
@@ -10,7 +11,10 @@ import { useParams } from 'react-router-dom';
 
 const PlaceList = () => {
   const userId = useParams().userId;
-  const [places, isLoading, error, handleError] = useFetch(`api/places/user/${userId}`);
+  const { userId: idLoggedUser } = useContext(AuthContext);
+  const [places, isLoading, error, handleError, setPlaces] = useFetch(
+    `api/places/user/${userId}`
+  );
 
   if (!places || isLoading) {
     return (
@@ -23,13 +27,25 @@ const PlaceList = () => {
   if (!places.length) {
     return (
       <div className="place-list center">
-        <Card>
-          <h2>No places found. Maybe create one?</h2>
-          <Button to="/places/new">Create Place</Button>
-        </Card>
+        {userId === idLoggedUser ? (
+          <Card>
+            <h2>No places found. Maybe create one?</h2>
+            <Button to="/places/new">Create Place</Button>
+          </Card>
+        ) : (
+          <Card>
+            <h2>No places found.</h2>
+          </Card>
+        )}
       </div>
     );
   }
+
+  const handleDeletePlace = (deletedPlaceId) => {
+    setPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place._id !== deletedPlaceId)
+    );
+  };
 
   return (
     <ul className="place-list">
@@ -45,6 +61,7 @@ const PlaceList = () => {
             address={address}
             creatorId={creator}
             coordinates={location}
+            handleDeletePlace={handleDeletePlace}
           />
         )
       )}
