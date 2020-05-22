@@ -9,14 +9,14 @@ import LoadingSpinner from '../../shared/LoadingSpinner';
 const UsersList = () => {
   const [users, isLoading, error, handleError] = useFetch('api/users');
 
-  if (isLoading)
+  if (!users || isLoading)
     return (
       <div className="center">
         <LoadingSpinner asOverLay />
       </div>
     );
 
-  if (users && !users.length) {
+  if (!users.length) {
     return (
       <div className="center">
         <Card>
@@ -30,7 +30,7 @@ const UsersList = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={handleError} />
       <ul className="users-list">
-        {users && users.map(({ _id, image, name, places }) => (
+        {users.map(({ _id, image, name, places }) => (
           <User
             key={_id}
             id={_id}

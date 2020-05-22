@@ -12,7 +12,7 @@ const PlaceList = () => {
   const userId = useParams().userId;
   const [places, isLoading, error, handleError] = useFetch(`api/places/user/${userId}`);
 
-  if (isLoading) {
+  if (!places || isLoading) {
     return (
       <div className="center">
         <LoadingSpinner asOverLay />
@@ -20,7 +20,7 @@ const PlaceList = () => {
     );
   }
 
-  if (places && !places.length) {
+  if (!places.length) {
     return (
       <div className="place-list center">
         <Card>
@@ -34,7 +34,7 @@ const PlaceList = () => {
   return (
     <ul className="place-list">
       <ErrorModal error={error} onClear={handleError} />
-      {places && places.map(
+      {places.map(
         ({ _id, imageUrl, title, description, address, creator, location }) => (
           <PlaceItem
             key={_id}
