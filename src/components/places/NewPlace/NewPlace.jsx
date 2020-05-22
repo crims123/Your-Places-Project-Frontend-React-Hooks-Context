@@ -3,12 +3,11 @@ import './NewPlace.css';
 import Input from '../../shared/Input';
 import Button from '../../shared/Button';
 import ErrorModal from '../../shared/ErrorModal';
-import LoadingSpinner from '../../shared/LoadingSpinner';
 import useInput from '../../../hooks/useInput';
 import useFetchOnSubmit from '../../../hooks/useFetchOnSumbit';
 
 const NewPlace = (props) => {
-  const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
+  const [fetchData, , error, handleError] = useFetchOnSubmit();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
@@ -33,7 +32,6 @@ const NewPlace = (props) => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={handleError} />
-      {isLoading && <LoadingSpinner asOverLay />}
       <form className="place-form" onSubmit={handleNewPlaceSubmit}>
         <Input
           id="title"
