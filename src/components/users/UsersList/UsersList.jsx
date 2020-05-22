@@ -30,10 +30,10 @@ const UsersList = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={handleError} />
       <ul className="users-list">
-        {users.map(({ id, image, name, places }) => (
+        {users && users.map(({ _id, image, name, places }) => (
           <User
-            key={id}
-            id={id}
+            key={_id}
+            id={_id}
             image={image}
             name={name}
             placeCount={places.length}
