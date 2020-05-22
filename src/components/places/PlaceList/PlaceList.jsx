@@ -3,38 +3,24 @@ import './PlaceList.css';
 import PlaceItem from './PlaceItem';
 import Card from '../../shared/Card';
 import Button from '../../shared/Button';
-
-const places = [
-  {
-    id: 'p1',
-    title: 'Empire State Building',
-    description: 'One of the most famous sky scrapers in the world!',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-    address: '20 W 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u1',
-  },
-  {
-    id: 'p2',
-    title: 'Emp. State Building',
-    description: 'One of the most famous sky scrapers in the world!',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-    address: '20 W 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u2',
-  },
-];
+import ErrorModal from '../../shared/ErrorModal';
+import LoadingSpinner from '../../shared/LoadingSpinner';
+import useFetch from '../../../hooks/useFetch';
+import { useParams } from 'react-router-dom';
 
 const PlaceList = () => {
-  if (!places.length) {
+  const userId = useParams().userId;
+  const [places, isLoading, error, handleError] = useFetch(`api/places/user/${userId}`);
+
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner asOverLay />
+      </div>
+    );
+  }
+
+  if (places && !places.length) {
     return (
       <div className="place-list center">
         <Card>
@@ -47,11 +33,12 @@ const PlaceList = () => {
 
   return (
     <ul className="place-list">
-      {places.map(
-        ({ id, imageUrl, title, description, address, creator, location }) => (
+      <ErrorModal error={error} onClear={handleError} />
+      {places && places.map(
+        ({ _id, imageUrl, title, description, address, creator, location }) => (
           <PlaceItem
-            key={id}
-            id={id}
+            key={_id}
+            id={_id}
             image={imageUrl}
             title={title}
             description={description}
