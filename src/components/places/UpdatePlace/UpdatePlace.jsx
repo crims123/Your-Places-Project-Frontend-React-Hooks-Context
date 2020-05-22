@@ -3,45 +3,18 @@ import { useParams } from 'react-router-dom';
 import './UpdatePlace.css';
 import Input from '../../shared/Input';
 import Button from '../../shared/Button';
+import ErrorModal from '../../shared/ErrorModal';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 import useInput from '../../../hooks/useInput';
+import useFetch from '../../../hooks/useFetch';
+import useFetchOnSubmit from '../../../hooks/useFetchOnSumbit';
 
-const places = [
-  {
-    id: 'p1',
-    title: 'Empire State Building',
-    description: 'One of the most famous sky scrapers in the world!',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-    address: '20 W 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u1',
-  },
-  {
-    id: 'p2',
-    title: 'Emp. State Building',
-    description: 'One of the most famous sky scrapers in the world!',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-    address: '20 W 34th St, New York, NY 10001',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584,
-    },
-    creator: 'u2',
-  },
-];
-
-const UpdatePlace = () => {
+const UpdatePlace = (props) => {
   const placeId = useParams().placeId;
+  const [fetchData, , errorUpdate, handleErrorUpdate] = useFetchOnSubmit();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const { title, description, address } = places.find(
-    (place) => place.id === placeId
-  );
-
-  const [values, handleOnChange] = useInput({});
+  const [values, handleOnChange, setValues] = useInput({});
   useEffect(() => {
     const { title, description, address } = values;
     if (title && description && address) {
@@ -51,15 +24,39 @@ const UpdatePlace = () => {
     }
   }, [values]);
 
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [place, isLoading, error, handleError] = useFetch(
+    `api/places/${placeId}`
+  );
+  useEffect(() => {
+    if (place) {
+      console.log(place)
+      const { title, description, address } = place;
+      setValues({ title, description, address });
+    }
+  }, [place]);
 
-  const handleUpdatePlaceSubmit = (e) => {
+  const handleUpdatePlaceSubmit = async (e) => {
     e.preventDefault();
-    console.log(values); // send to the backend Update place
+    const response = await fetchData(`/api/places/${placeId}`, 'put', values);
+    if (response) {
+      props.history.push('/');
+    }
   };
+
+  if (!place || isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner asOverLay />
+      </div>
+    );
+  }
+
+  const { title, description, address } = place;
 
   return (
     <form className="update-place" onSubmit={handleUpdatePlaceSubmit}>
+      <ErrorModal error={error} onClear={handleError} />
+      <ErrorModal error={errorUpdate} onClear={handleErrorUpdate} />
       <Input
         id="title"
         type="text"
