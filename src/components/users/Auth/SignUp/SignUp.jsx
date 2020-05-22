@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axiosClient from '../../../../config/axios';
 import './SignUp.css';
 import { AuthContext } from '../../../../context/auth-context';
+import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
 import Card from '../../../shared/Card';
@@ -11,8 +11,7 @@ import useInput from '../../../../hooks/useInput';
 
 const SignUp = (props) => {
   const { setIsAuth } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
@@ -28,20 +27,11 @@ const SignUp = (props) => {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setIsLoading(true);
-      await axiosClient.post('/api/users', values);
-      setIsLoading(false);
+    const response = await fetchData('/api/users', 'post', values);
+    if (response) {
       setIsAuth(true);
       props.history.push('/');
-    } catch (error) {
-      setIsLoading(false);
-      setError(error.response.data.message);
     }
-  };
-
-  const handleError = () => {
-    setError(null);
   };
 
   return (
