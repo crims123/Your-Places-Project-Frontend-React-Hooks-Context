@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import axiosClient from '../config/axios';
 
 const useFetch = (url, verb, values) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   let client = null;
 
