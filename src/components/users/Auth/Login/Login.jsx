@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Login.css';
 import { AuthContext } from '../../../../context/auth-context';
+import tokenAuth from '../../../../config/token'
 import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
@@ -29,6 +30,7 @@ const Login = (props) => {
     e.preventDefault();
     const response = await fetchData('/api/users/login', 'post', values);
     if (response) {
+      tokenAuth(response.data.data);
       setIsAuth(true);
       props.history.push('/');
     }
