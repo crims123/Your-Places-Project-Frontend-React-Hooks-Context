@@ -4,7 +4,7 @@ import { AuthContext } from '../../../../context/auth-context';
 import './NavLinks.css';
 
 const NavLinks = () => {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth, setIsAuth, userId } = useContext(AuthContext);
 
   const handleLogOut = () => {
     setIsAuth(false);
@@ -21,7 +21,7 @@ const NavLinks = () => {
       {isAuth && (
         <React.Fragment>
           <li>
-            <NavLink to="/u1/places">MY PLACES</NavLink>
+            <NavLink to={`/${userId}/places`}>MY PLACES</NavLink>
           </li>
           <li>
             <NavLink to="/places/new">ADD PLACE</NavLink>
