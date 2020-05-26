@@ -9,7 +9,15 @@ import LoadingSpinner from '../../../shared/LoadingSpinner';
 import Map from '../../../shared/Map';
 import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 
-const PlaceItem = ({ id, image, title, description, address, coordinates, handleDeletePlace }) => {
+const PlaceItem = ({
+  id,
+  image,
+  title,
+  description,
+  address,
+  coordinates,
+  handleDeletePlace,
+}) => {
   const { isAuth } = useContext(AuthContext);
   const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
 
@@ -80,9 +88,9 @@ const PlaceItem = ({ id, image, title, description, address, coordinates, handle
 
       <li className="place-item">
         <Card className="place-item__content">
-        {isLoading && <LoadingSpinner asOverLay />}
+          {isLoading && <LoadingSpinner asOverLay />}
           <div className="place-item__image">
-            <img src={image} alt={title} />
+            <img src={`http://localhost:4000/${image}`} alt={title} />
           </div>
 
           <div className="place-item__info">

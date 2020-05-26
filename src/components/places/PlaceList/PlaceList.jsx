@@ -51,11 +51,11 @@ const PlaceList = () => {
     <ul className="place-list">
       <ErrorModal error={error} onClear={handleError} />
       {places.map(
-        ({ _id, imageUrl, title, description, address, creator, location }) => (
+        ({ _id, image, title, description, address, creator, location }) => (
           <PlaceItem
             key={_id}
             id={_id}
-            image={imageUrl}
+            image={image}
             title={title}
             description={description}
             address={address}
