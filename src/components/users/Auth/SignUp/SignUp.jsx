@@ -7,34 +7,46 @@ import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
 import Card from '../../../shared/Card';
 import ErrorModal from '../../../shared/ErrorModal';
+import UploadImages from '../../../shared/UploadImages';
 import LoadingSpinner from '../../../shared/LoadingSpinner';
 import useInput from '../../../../hooks/useInput';
 
 const SignUp = (props) => {
   const { setIsAuth, setUserId } = useContext(AuthContext);
   const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
+  const [loadedImage, setLoadedImage] = useState();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
     const { name, email, password } = values;
-    if (name && email && password) {
+    if (name && email && password && loadedImage && loadedImage.isLoadedImage) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
     }
-  }, [values]);
+  }, [values, loadedImage]);
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetchData('/api/users', 'post', values);
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('password', values.password);
+    formData.append('image', loadedImage.file);
+
+    const response = await fetchData('/api/users', 'post', formData);
     if (response) {
       tokenAuth(response.data.data.token);
       setUserId(response.data.data.userId);
       setIsAuth(true);
       props.history.push('/');
     }
+  };
+
+  const handleLoadedImage = (data) => {
+    setLoadedImage(data);
   };
 
   return (
@@ -61,6 +73,12 @@ const SignUp = (props) => {
             label="Email"
             handleOnChange={handleOnChange}
             name="email"
+          />
+
+          <UploadImages
+            id="image-upload"
+            center
+            handleLoadedImage={handleLoadedImage}
           />
 
           <Input
