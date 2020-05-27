@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Login.css';
 import { AuthContext } from '../../../../context/auth-context';
-import tokenAuth from '../../../../config/token';
 import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
@@ -10,9 +10,10 @@ import ErrorModal from '../../../shared/ErrorModal';
 import LoadingSpinner from '../../../shared/LoadingSpinner';
 import useInput from '../../../../hooks/useInput';
 
-const Login = (props) => {
-  const { setIsAuth, setUserId } = useContext(AuthContext);
+const Login = () => {
+  const { setIsAuth, setUserId, setToken } = useContext(AuthContext);
   const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
+  const history = useHistory();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
@@ -30,10 +31,10 @@ const Login = (props) => {
     e.preventDefault();
     const response = await fetchData('/api/users/login', 'post', values);
     if (response) {
-      tokenAuth(response.data.data.token);
       setUserId(response.data.data.userId);
+      setToken(response.data.data.token);
       setIsAuth(true);
-      props.history.push('/');
+      history.push('/');
     }
   };
 

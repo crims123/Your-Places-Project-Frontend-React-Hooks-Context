@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { AuthContext } from '../../../context/auth-context';
 import './Header.css';
 import NavLinks from './NavLinks';
 import SideDrawer from './SideDrawer';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+
+  const { setIsAuth, setToken, setUserId } = useContext(AuthContext);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (
+      userData &&
+      userData.token &&
+      userData.userId &&
+      new Date(userData.expiration) > new Date()
+    ) {
+      setIsAuth(true);
+      setToken(userData.token);
+      setUserId(userData.userId);
+    } else {
+      history.push('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenMenu = () => {
     setIsOpen(!isOpen);

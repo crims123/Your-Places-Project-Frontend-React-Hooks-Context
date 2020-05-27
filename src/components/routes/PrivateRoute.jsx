@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from '../../context/auth-context';
 
 const PrivateRoute = ({ component: Component, ...props }) => {
-  const { isAuth } = useContext(AuthContext);
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   return (
     <Route
       {...props}
       render={(props) =>
-        !isAuth ? <Redirect to="/" /> : <Component {...props} />
+        userData && userData.token ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/" />
+        )
       }
     />
   );

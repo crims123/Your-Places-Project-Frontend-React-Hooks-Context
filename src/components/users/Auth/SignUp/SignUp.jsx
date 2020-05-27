@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import './SignUp.css';
 import { AuthContext } from '../../../../context/auth-context';
-import tokenAuth from '../../../../config/token';
 import useFetchOnSubmit from '../../../../hooks/useFetchOnSumbit';
 import Input from '../../../shared/Input';
 import Button from '../../../shared/Button';
@@ -12,9 +12,10 @@ import LoadingSpinner from '../../../shared/LoadingSpinner';
 import useInput from '../../../../hooks/useInput';
 
 const SignUp = (props) => {
-  const { setIsAuth, setUserId } = useContext(AuthContext);
+  const { setIsAuth, setUserId, setToken } = useContext(AuthContext);
   const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
   const [loadedImage, setLoadedImage] = useState();
+  const history = useHistory();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
@@ -38,10 +39,10 @@ const SignUp = (props) => {
 
     const response = await fetchData('/api/users', 'post', formData);
     if (response) {
-      tokenAuth(response.data.data.token);
       setUserId(response.data.data.userId);
+      setToken(response.data.data.token);
       setIsAuth(true);
-      props.history.push('/');
+      history.push('/');
     }
   };
 

@@ -1,13 +1,21 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../../context/auth-context';
 import './NavLinks.css';
 
 const NavLinks = () => {
-  const { isAuth, setIsAuth, userId } = useContext(AuthContext);
+  const { isAuth, setIsAuth, userId, setUserId, setToken } = useContext(
+    AuthContext
+  );
+
+  const history = useHistory();
 
   const handleLogOut = () => {
     setIsAuth(false);
+    setToken(null);
+    setUserId(null);
+    localStorage.removeItem('userData');
+    history.push('/');
   };
 
   return (
