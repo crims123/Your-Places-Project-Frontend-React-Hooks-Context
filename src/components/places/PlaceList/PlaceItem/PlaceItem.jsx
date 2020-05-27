@@ -90,7 +90,7 @@ const PlaceItem = ({
         <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverLay />}
           <div className="place-item__image">
-            <img src={`http://localhost:4000/${image}`} alt={title} />
+            <img src={`${process.env.REACT_APP_BACKEND_URL}/${image}`} alt={title} />
           </div>
 
           <div className="place-item__info">

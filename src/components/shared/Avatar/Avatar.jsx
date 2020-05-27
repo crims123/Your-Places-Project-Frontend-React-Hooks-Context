@@ -5,7 +5,7 @@ const Avatar = ({ className, style, image, alt, width }) => {
   return (
     <div className={`avatar ${className}`} style={style}>
       <img
-        src={`http://localhost:4000/${image}`}
+        src={`${process.env.REACT_APP_BACKEND_URL}/${image}`}
         alt={alt}
         style={{ width: width, height: width }}
       />
