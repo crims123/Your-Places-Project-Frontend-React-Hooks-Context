@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import './UpdatePlace.css';
 import Input from '../../shared/Input';
 import Button from '../../shared/Button';
@@ -9,10 +9,11 @@ import useInput from '../../../hooks/useInput';
 import useFetch from '../../../hooks/useFetch';
 import useFetchOnSubmit from '../../../hooks/useFetchOnSumbit';
 
-const UpdatePlace = (props) => {
+const UpdatePlace = () => {
   const placeId = useParams().placeId;
   const [fetchData, , errorUpdate, handleErrorUpdate] = useFetchOnSubmit();
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const history = useHistory();
 
   const [values, handleOnChange, setValues] = useInput({});
   useEffect(() => {
@@ -39,7 +40,7 @@ const UpdatePlace = (props) => {
     e.preventDefault();
     const response = await fetchData(`/api/places/${placeId}`, 'put', values);
     if (response) {
-      props.history.push('/');
+      history.push('/');
     }
   };
 

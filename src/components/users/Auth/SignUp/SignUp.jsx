@@ -11,7 +11,7 @@ import UploadImages from '../../../shared/UploadImages';
 import LoadingSpinner from '../../../shared/LoadingSpinner';
 import useInput from '../../../../hooks/useInput';
 
-const SignUp = (props) => {
+const SignUp = () => {
   const { setIsAuth, setUserId, setToken } = useContext(AuthContext);
   const [fetchData, isLoading, error, handleError] = useFetchOnSubmit();
   const [loadedImage, setLoadedImage] = useState();

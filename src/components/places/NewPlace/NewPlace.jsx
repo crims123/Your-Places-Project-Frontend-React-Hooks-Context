@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './NewPlace.css';
 import Input from '../../shared/Input';
 import Button from '../../shared/Button';
@@ -7,9 +8,10 @@ import UploadImages from '../../shared/UploadImages';
 import useInput from '../../../hooks/useInput';
 import useFetchOnSubmit from '../../../hooks/useFetchOnSumbit';
 
-const NewPlace = (props) => {
+const NewPlace = () => {
   const [fetchData, , error, handleError] = useFetchOnSubmit();
   const [loadedImage, setLoadedImage] = useState();
+  const history = useHistory();
 
   const [values, handleOnChange] = useInput({});
   useEffect(() => {
@@ -39,7 +41,7 @@ const NewPlace = (props) => {
 
     const response = await fetchData('/api/places', 'post', formData);
     if (response) {
-      props.history.push('/');
+      history.push('/');
     }
   };
 
