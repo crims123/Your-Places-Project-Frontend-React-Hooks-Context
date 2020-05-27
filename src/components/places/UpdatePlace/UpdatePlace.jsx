@@ -30,10 +30,10 @@ const UpdatePlace = () => {
   );
   useEffect(() => {
     if (place) {
-      console.log(place)
       const { title, description, address } = place;
       setValues({ title, description, address });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
   const handleUpdatePlaceSubmit = async (e) => {

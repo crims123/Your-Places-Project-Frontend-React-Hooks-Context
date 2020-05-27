@@ -47,6 +47,7 @@ const useFetch = (url, verb, values) => {
       }
     };
     fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleError = () => {

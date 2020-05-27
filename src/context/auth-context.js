@@ -19,6 +19,9 @@ const AuthContextStore = (props) => {
         expiration: tokenExpirationDate,
       })
     );
+  }
+
+  if (token) {
     tokenAuth(token);
   }
 
