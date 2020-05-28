@@ -1,3 +1,19 @@
+# Yor Places-Project-Frontend
+### Developed by Cristian David Pinto - 2020
+Project created using MERN (mongodb, express, react, node).
+
+Frontend created with react, hooks, and context.
+
+### Website: 
+https://inspiring-mestorf-437415.netlify.app/
+
+### Frontend Code: 
+https://github.com/crims123/Your-Places-Project-Frontend-React-Hooks-Context
+
+### Backend Code: 
+https://github.com/crims123/Your-Places-Project-Backend-Node-Express-Mongo
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
